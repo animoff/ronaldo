@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Заказ №{{ order.pk }} — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'commerce:order_list' %}">Мои заказы</a>
+            <span aria-hidden="true">/</span>
+            <span>Заказ №{{ order.pk }}</span>
+        </nav>
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ЗАКАЗ СОХРАНЁН</p>
+                <h1>Заказ №{{ order.pk }}</h1>
+                <p>{{ order.created_at|date:'d E Y, H:i' }}</p>
+            </div>
+            <span class="status-badge">{{ order.get_status_display }}</span>
+        </div>
+        <div class="cart-layout">
+            <section class="form-panel">
+                <h2>Всё на месте.</h2>
+                <p class="muted">Товары, которые ты выбрал:</p>
+                <div class="order-lines">
+                    {% for item in order.items.all %}
+                        <div class="order-line">
+                            <div>
+                                <h3>{{ item.product_name }}</h3>
+                                <p>{{ item.size_name }} · {{ item.quantity }} шт. × {{ item.unit_price|floatformat:2 }} ₽</p>
+                            </div>
+                            <strong>{{ item.line_total|floatformat:2 }} ₽</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <aside class="order-summary">
+                <p class="eyebrow">ДЕТАЛИ ЗАКАЗА</p>
+                <h2>Адрес доставки</h2>
+                <div class="address">{{ order.address|linebreaks }}</div>
+                <div class="summary-row summary-total">
+                    <span>Итого</span>
+                    <strong>{{ order.total|floatformat:2 }} ₽</strong>
+                </div>
+                <p class="micro-note">Это учебный заказ. Отправка товаров и списание денег не выполняются.</p>
+            </aside>
+        </div>
+        {% include "includes/learning_hint.html" with hint="Заказ хранит снимок названия, размера и цены на момент покупки. Даже если товар позже изменится, история заказа останется правильной. Чужой заказ недоступен даже по известному URL." %}
+    </div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Доступ запрещён — Backend Lab{% endblock %}{% block content %}
+<div class="container empty-state spacious">
+    <span class="error-code">403</span>
+    <h1>Для этого действия нет доступа.</h1>
+    <p>Если страница долго была открыта, обнови её и попробуй снова.</p>
+    <a class="button button-dark" href="{% url 'main:home' %}">На главную →</a>
+</div>
+{% endblock %}

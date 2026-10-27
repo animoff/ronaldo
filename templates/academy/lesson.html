@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }} — Учебник Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'academy:index' %}">Учебник</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ lesson.title }}</span>
+        </nav>
+        <div class="lesson-layout">
+            <aside class="lesson-sidebar">
+                <a class="text-link" href="{% url 'academy:index' %}">← Все разделы</a>
+                <p class="eyebrow">СЕЙЧАС ИЗУЧАЕМ</p>
+                <h2>{{ lesson.title }}</h2>
+                <span class="level-badge">{{ lesson.level|default:'Практика' }}</span>
+                <p>{{ lesson.summary }}</p>
+                <div class="sidebar-tip">
+                    <strong>Совет</strong>
+                    <p>Открой код проекта рядом с учебником. Запускай примеры и объясняй себе каждую строку.</p>
+                </div>
+                <a class="button button-outline button-small"
+                   href="{% url 'main:product_list' %}">Открыть магазин ↗</a>
+            </aside>
+            <article class="lesson-content">
+                <header class="lesson-title">
+                    <p class="eyebrow">BACKEND LAB / УЧЕБНИК</p>
+                    <h1>{{ lesson.title }}</h1>
+                </header>
+                <div class="prose">{{ content_html|safe }}</div>
+                <div class="lesson-bottom">
+                    <p>Разобрался в теме? Закрепи её изменением кода и проверкой результата.</p>
+                    <nav aria-label="Переход между уроками">
+                        {% if previous_lesson %}
+                            <a class="button button-outline button-small"
+                               href="{% url 'academy:lesson' previous_lesson.slug %}">← Предыдущий урок</a>
+                        {% endif %}
+                        {% if next_lesson %}
+                            <a class="button button-dark button-small"
+                               href="{% url 'academy:lesson' next_lesson.slug %}">Следующий урок →</a>
+                        {% else %}
+                            <a class="button button-dark button-small"
+                               href="{% url 'academy:index' %}">К программе обучения →</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </article>
+        </div>
+    </div>
+{% endblock %}

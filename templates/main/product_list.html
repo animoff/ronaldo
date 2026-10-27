@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Каталог — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ДЕМОНСТРАЦИОННЫЙ МАГАЗИН</p>
+                <h1>
+                    Вещи для тех,
+                    <br>
+                    кто пишет код.
+                </h1>
+                <p>Выбери своё. А потом загляни под капот.</p>
+            </div>
+            <span class="large-index" aria-hidden="true">&lt;/&gt;</span>
+        </div>
+        <form class="catalog-filters"
+              action="{% url 'main:product_list' %}"
+              method="get">
+            <div class="search-field">
+                <label class="sr-only" for="catalog-search">Название или описание товара</label>
+                <span aria-hidden="true">⌕</span>
+                <input id="catalog-search"
+                       name="q"
+                       type="search"
+                       value="{{ query }}"
+                       placeholder="Найти что-нибудь своё">
+            </div>
+            <div>
+                <label class="sr-only" for="category-filter">Категория</label>
+                <select id="category-filter" name="category">
+                    <option value="">Все категории</option>
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}"
+                                {% if current_category == category.slug %} selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="button button-dark" type="submit">Найти →</button>
+            {% if query or current_category %}
+                <a class="text-link" href="{% url 'main:product_list' %}">Сбросить</a>
+            {% endif %}
+        </form>
+        <div class="results-caption">
+            <span>Найдено товаров: {{ products.paginator.count }}</span>
+            <span>Учебная коллекция / 01</span>
+        </div>
+        <div class="product-grid">
+            {% for product in products %}
+                {% include "includes/product_card.html" %}
+            {% empty %}
+                <div class="empty-state">
+                    <span class="empty-symbol" aria-hidden="true">⌕</span>
+                    <h2>Ничего не нашлось</h2>
+                    <p>Попробуй другое название или выбери все категории.</p>
+                    <a class="button button-dark" href="{% url 'main:product_list' %}">Показать всё</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% include "includes/pagination.html" %}
+        {% include "includes/learning_hint.html" with hint="Поиск отправляет GET-запрос. Django читает параметры q и category, строит SQL через ORM и возвращает только одну страницу товаров. Загляни в main/views.py." %}
+    </div>
+{% endblock %}

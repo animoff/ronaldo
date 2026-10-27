@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Вход — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container auth-layout">
+        <div class="auth-copy">
+            <p class="eyebrow">ПРОДОЛЖАЙ ИССЛЕДОВАТЬ</p>
+            <h1>
+                С возвращением
+                <br>
+                в <em>лабораторию.</em>
+            </h1>
+            <p>Войди, чтобы оформить учебный заказ и посмотреть, как работают сессии и личный кабинет.</p>
+            <div class="auth-note">
+                <span aria-hidden="true">{ }</span>
+                <p>
+                    Пароли не хранятся в открытом виде.
+                    <br>
+                    Django проверяет их хеши.
+                </p>
+            </div>
+        </div>
+        <section class="auth-panel">
+            <span class="pill">ТВОЙ АККАУНТ</span>
+            <h2>Войти</h2>
+            <p class="muted">Используй имя пользователя и пароль.</p>
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+                {% include "includes/form_fields.html" %}
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
+                <button class="button button-dark button-full" type="submit">Войти →</button>
+            </form>
+            <p class="auth-switch">Ещё нет аккаунта? <a href="{% url 'commerce:register' %}">Зарегистрироваться</a>
+            </p>
+        </section>
+    </div>
+{% endblock %}

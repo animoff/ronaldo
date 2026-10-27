@@ -1,0 +1,53 @@
+{# SVG-иллюстрации локальны: для первого запуска не нужны CDN и загрузка фотографий. #}
+<div class="product-illustration" aria-hidden="true">
+    <span class="illustration-orbit orbit-one"></span>
+    <span class="illustration-orbit orbit-two"></span>
+    <svg class="garment" viewBox="0 0 220 240" fill="none">
+        {% if product.slug == "focus-bottle" %}
+            <rect x="89" y="23" width="42" height="25" rx="6" fill="currentColor" />
+            <path d="M87 48H133V65L149 85V204Q110 220 71 204V85L87 65Z" fill="currentColor" />
+            <rect x="78" y="108" width="64" height="55" rx="7" fill="#f5f7ec" opacity=".8" />
+            <text x="110" y="140" text-anchor="middle" fill="currentColor" font-family="monospace" font-size="14">FOCUS</text>
+        {% elif product.slug == "review-pen" %}
+            <path d="M95 40Q110 20 125 40V185L110 215 95 185Z" fill="currentColor" />
+            <path d="M125 51H136V109M99 177H121" stroke="#f5f7ec" stroke-width="5" />
+        {% elif product.slug == "api-mug" %}
+            <path d="M151 83H169Q199 114 169 146H151" stroke="currentColor" stroke-width="16" />
+            <path d="M49 65H154V185Q100 216 49 185Z" fill="currentColor" />
+            <ellipse cx="101" cy="65" rx="52" ry="12" fill="#f5f7ec" />
+            <text x="102" y="139" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="24">200 OK</text>
+        {% elif product.slug == "git-socks" %}
+            <path d="M58 40H99V144L64 185Q22 193 29 160L58 128Z" fill="currentColor" />
+            <path d="M128 40H169V144L134 185Q92 193 99 160L128 128Z" fill="currentColor" />
+            <path d="M59 65H97M129 65H167" stroke="#f5f7ec" stroke-width="8" />
+        {% elif product.slug == "terminal-cap" %}
+            <path d="M42 142Q43 49 117 55Q176 57 181 142Z" fill="currentColor" />
+            <path d="M42 142H181Q219 174 165 181L39 163Z" fill="currentColor" opacity=".8" />
+            <text x="114" y="121" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="27">&gt;_</text>
+        {% elif product.slug == "backend-tote" %}
+            <path d="M74 85V59Q110 13 146 59V85" stroke="currentColor" stroke-width="12" />
+            <path d="M47 81H173L183 211H37Z" fill="currentColor" />
+            <text x="110" y="154" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="20">BACKEND</text>
+        {% elif product.slug == "deploy-bag" or product.slug == "query-mat" %}
+            <rect x="20" y="57" width="180" height="140" rx="17" fill="currentColor" />
+            <rect x="29" y="66" width="162" height="122" rx="11" stroke="#f5f7ec" opacity=".5" />
+            <text x="110" y="134" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="25">{ code }</text>
+        {% elif product.slug == "commit-notebook" %}
+            <rect x="48" y="30" width="128" height="182" rx="9" fill="currentColor" />
+            <path d="M67 30V212M146 31V211" stroke="#f5f7ec" opacity=".5" stroke-width="4" />
+            <text x="109" y="118" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="16">COMMIT</text>
+        {% elif product.slug == "debug-stickers" %}
+            <rect x="30" y="40" width="94" height="98" rx="12" fill="currentColor" />
+            <circle cx="139" cy="152" r="60" fill="currentColor" stroke="#f5f7ec" stroke-width="5" />
+            <text x="77" y="97" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="22">{ }</text>
+            <text x="139" y="159" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="17">DEBUG</text>
+        {% else %}
+            <path d="M73 30 42 48 13 105 49 124 61 99 57 213Q110 227 163 213L159 99 171 124 207 105 178 48 147 30 133 18H87Z" fill="currentColor" stroke="rgba(0,0,0,.12)" stroke-width="2" />
+            <path d="M87 18Q110 42 133 18L147 30Q110 69 73 30Z" fill="rgba(0,0,0,.14)" />
+            <path d="M63 202Q110 214 161 202" stroke="rgba(0,0,0,.13)" stroke-width="3" />
+            <text x="110" y="122" text-anchor="middle" fill="#f5f7ec" font-family="monospace" font-size="20">&lt; / &gt;</text>
+            <text x="110" y="143" text-anchor="middle" fill="#f5f7ec" font-family="sans-serif" font-size="7" letter-spacing="2">BUILD SOMETHING</text>
+        {% endif %}
+    </svg>
+    <span class="illustration-label">BACKEND LAB / COLLECTION 01</span>
+</div>

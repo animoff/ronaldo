@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Корзина — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</p>
+                <h1>Корзина</h1>
+                <p>До первого заказа — пара шагов.</p>
+            </div>
+            <a class="text-link" href="{% url 'main:product_list' %}">Продолжить покупки ↗</a>
+        </div>
+        {% if lines %}
+            <div class="cart-layout">
+                <div class="cart-items">
+                    {% for line in lines %}
+                        <article class="cart-item">
+                            <a href="{% url 'main:product_detail' line.product.slug %}"
+                               class="cart-thumbnail product-tone-sage"
+                               aria-label="{{ line.product.name }}">
+                                {% if line.product.main_image %}
+                                    <img src="{{ line.product.main_image.url }}" alt="">
+                                {% else %}
+                                    <span aria-hidden="true">&lt;/&gt;</span>
+                                {% endif %}
+                            </a>
+                            <div class="cart-item-copy">
+                                <h2>
+                                    <a href="{% url 'main:product_detail' line.product.slug %}">{{ line.product.name }}</a>
+                                </h2>
+                                <p>{{ line.sku.size.name }} · {{ line.unit_price|floatformat:2 }} ₽ / шт.</p>
+                                <form method="post"
+                                      action="{% url 'commerce:cart_update' line.sku.pk %}"
+                                      class="cart-quantity-form">
+                                    {% csrf_token %}
+                                    <label class="sr-only"
+                                           for="cart-quantity-{{ line.sku.pk }}">Количество: {{ line.product.name }}</label>
+                                    <input class="quantity-input"
+                                           id="cart-quantity-{{ line.sku.pk }}"
+                                           type="number"
+                                           name="quantity"
+                                           value="{{ line.quantity }}"
+                                           min="0"
+                                           max="99">
+                                    <button class="link-button" type="submit">Обновить</button>
+                                </form>
+                            </div>
+                            <div class="cart-item-right">
+                                <strong>{{ line.line_total|floatformat:2 }} ₽</strong>
+                                <form method="post" action="{% url 'commerce:cart_update' line.sku.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="quantity" value="0">
+                                    <button class="link-button muted" type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+                <aside class="order-summary">
+                    <p class="eyebrow">ТВОЙ ЗАКАЗ</p>
+                    <h2>Подведём итог</h2>
+                    <div class="summary-row">
+                        <span>Товары</span>
+                        <strong>{{ total|floatformat:2 }} ₽</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span>Учебная</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Итого</span>
+                        <strong>{{ total|floatformat:2 }} ₽</strong>
+                    </div>
+                    <a class="button button-dark button-full"
+                       href="{% url 'commerce:checkout' %}">Оформить заказ →</a>
+                    {% if not user.is_authenticated %}
+                        <p class="micro-note">На следующем шаге нужно войти или зарегистрироваться.</p>
+                    {% endif %}
+                    <p class="micro-note">Оплата не требуется. Это демонстрационный проект.</p>
+                </aside>
+            </div>
+        {% else %}
+            <div class="empty-state spacious">
+                <span class="empty-symbol" aria-hidden="true">⌑</span>
+                <h2>Здесь пока пусто</h2>
+                <p>Найди что-нибудь в каталоге — и посмотри, как работает корзина.</p>
+                <a class="button button-dark" href="{% url 'main:product_list' %}">Открыть каталог ↗</a>
+            </div>
+        {% endif %}
+        {% include "includes/learning_hint.html" with hint="В сессии хранятся только идентификаторы вариантов товара и количество. Названия и цены сервер получает из базы заново: данным о цене из браузера доверять нельзя." %}
+    </div>
+{% endblock %}

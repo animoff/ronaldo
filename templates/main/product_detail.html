@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'main:product_list' %}">Каталог</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ product.name }}</span>
+        </nav>
+        <div class="product-detail">
+            <div class="product-art product-tone-sage product-art-large">
+                {% if product.main_image %}
+                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    {% include "includes/product_illustration.html" %}
+                {% endif %}
+                <span class="product-category">{{ product.category.name }}</span>
+            </div>
+            <div class="product-info">
+                <p class="eyebrow">BACKEND LAB / COLLECTION 01</p>
+                <h1>{{ product.name }}</h1>
+                <p class="product-color">Цвет: {{ product.color }}</p>
+                <p class="detail-price">{{ product.price|floatformat:2 }} ₽</p>
+                <div class="product-description">{{ product.description|linebreaks }}</div>
+                <h2 class="small-heading">Выбери размер</h2>
+                <div class="sku-list">
+                    {% for sku in product_sizes %}
+                        <form class="sku-row"
+                              method="post"
+                              action="{% url 'commerce:cart_add' sku.pk %}">
+                            {% csrf_token %}
+                            <div>
+                                <strong>{{ sku.size.name }}</strong>
+                                <span>{% if sku.stock %}В наличии: {{ sku.stock }}{% else %}Нет в наличии{% endif %}</span>
+                            </div>
+                            {% if sku.stock %}
+                                <label class="sr-only"
+                                       for="quantity-{{ sku.pk }}">Количество, размер {{ sku.size.name }}</label>
+                                <input class="quantity-input"
+                                       id="quantity-{{ sku.pk }}"
+                                       type="number"
+                                       name="quantity"
+                                       value="1"
+                                       min="1"
+                                       max="{{ sku.stock }}">
+                                <button class="button button-dark button-small" type="submit">В корзину +</button>
+                            {% else %}
+                                <button class="button button-small" disabled>Закончился</button>
+                            {% endif %}
+                        </form>
+                    {% empty %}
+                        <p class="muted">Размеры скоро появятся.</p>
+                    {% endfor %}
+                </div>
+                <p class="micro-note">Учебный заказ · без оплаты и реальной доставки</p>
+            </div>
+        </div>
+        {% if product.images.all %}
+            <div class="product-gallery">
+                {% for photo in product.images.all %}
+                    <img src="{{ photo.image.url }}"
+                         alt="{{ product.name }} — дополнительное фото {{ forloop.counter }}"
+                         loading="lazy">
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% include "includes/learning_hint.html" with hint="Товар находится по slug в URL. Категория и остатки загружаются вместе с ним, чтобы избежать лишних SQL-запросов. Добавление в корзину — POST-запрос с CSRF-защитой." %}
+    </div>
+{% endblock %}

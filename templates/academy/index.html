@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Учебник backend-разработчика — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <div class="page-heading academy-heading">
+            <div>
+                <span class="pill">
+                    <span class="live-dot"></span> Теория связана с настоящим кодом</span>
+                    <h1>
+                        Твой путеводитель
+                        <br>
+                        в <em>backend.</em>
+                    </h1>
+                    <p>От основ Python до надёжного приложения. Читай последовательно или возвращайся к теме, когда она понадобится.</p>
+                </div>
+                <div class="academy-mark" aria-hidden="true">{<span>learn</span>}</div>
+            </div>
+            <div class="academy-intro">
+                <div>
+                    <span class="intro-number">01</span>
+                    <p>
+                        <strong>Прочитай объяснение</strong>
+                        <br>
+                        Пойми идею и её назначение.
+                    </p>
+                </div>
+                <div>
+                    <span class="intro-number">02</span>
+                    <p>
+                        <strong>Найди пример в проекте</strong>
+                        <br>
+                        Свяжи теорию с работающим кодом.
+                    </p>
+                </div>
+                <div>
+                    <span class="intro-number">03</span>
+                    <p>
+                        <strong>Сделай самостоятельно</strong>
+                        <br>
+                        Измени код и проверь результат.
+                    </p>
+                </div>
+            </div>
+            <div class="section-heading compact">
+                <div>
+                    <p class="eyebrow">УЧЕБНАЯ ПРОГРАММА</p>
+                    <h2>
+                        Одна тема —
+                        <br>
+                        ещё один шаг вперёд.
+                    </h2>
+                </div>
+                <span class="muted">{{ lessons|length }} разделов · в своём темпе</span>
+            </div>
+            <div class="lesson-grid">
+                {% for lesson in lessons %}
+                    <a class="lesson-card" href="{% url 'academy:lesson' lesson.slug %}">
+                        <div class="lesson-meta">
+                            <span class="lesson-number">
+                                {% if lesson.number %}{{ lesson.number }}{% else %}{{ forloop.counter|stringformat:'02d' }}{% endif %}
+                            </span>
+                            <span class="level-badge">{{ lesson.level|default:'Практика' }}</span>
+                        </div>
+                        <h2>{{ lesson.title }}</h2>
+                        <p>{{ lesson.summary }}</p>
+                        <span class="card-link">Изучить тему <span aria-hidden="true">↗</span>
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="learning-hint">
+                <span class="hint-icon" aria-hidden="true">↗</span>
+                <div>
+                    <h2>Тебе не нужно запоминать всё сразу</h2>
+                    <p>Возвращайся к этим страницам, читай комментарии в коде и запускай тесты. Настоящее понимание приходит через маленькие самостоятельные изменения.</p>
+                    <a href="{% url 'main:product_list' %}">Исследовать учебный магазин ↗</a>
+                </div>
+            </div>
+        </div>
+{% endblock %}

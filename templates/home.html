@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="hero container">
+        <div class="hero-copy">
+            <span class="pill">
+                <span class="live-dot"></span> Твой путь в backend-разработку</span>
+                <h1>
+                    Пойми, что
+                    <br>
+                    за <em>экраном.</em>
+                </h1>
+                <p class="hero-description">Работающий Django-проект, в котором можно разобрать каждую деталь. От HTTP-запроса до заказа в базе данных — с объяснениями на русском.</p>
+                <div class="hero-actions">
+                    <a class="button button-dark"
+                       href="{% url 'academy:index' %}">Начать обучение <span aria-hidden="true">↗</span>
+                    </a>
+                    <a class="text-link"
+                       href="{% url 'main:product_list' %}">Посмотреть проект <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+                <div class="hero-note">
+                    <span class="stack-badge">Py</span>
+                    <span class="stack-badge badge-green">Dj</span>
+                    <span>Python + Django
+                        <br>
+                        <strong>Реальный код. Понятные объяснения.</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="hero-visual"
+                 aria-label="Путь запроса: браузер, Django, база данных, ответ">
+                <div class="visual-grid"></div>
+                <div class="visual-label">
+                    <span class="live-dot"></span> YOUR BACKEND, EXPLAINED
+                </div>
+                <div class="terminal">
+                    <div class="terminal-bar">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <small>views.py</small>
+                    </div>
+                    <div class="terminal-code">
+                        <span class="code-muted"># Всё начинается с запроса</span>
+                        <br>
+                        <span class="code-purple">def</span>
+                        <span class="code-yellow">product_list</span>(request):
+                        <br>
+                        &nbsp; products = Product.objects
+                        <br>
+                        &nbsp;&nbsp;&nbsp; .<span class="code-yellow">filter</span>(is_active=<span class="code-purple">True</span>)
+                        <br>
+                        <br>
+                        &nbsp; <span class="code-purple">return</span> render(request,
+                        <br>
+                        &nbsp;&nbsp;&nbsp; <span class="code-green">"main/product_list.html"</span>,
+                        <br>
+                        &nbsp;&nbsp;&nbsp; {<span class="code-green">"products"</span>: products})
+                    </div>
+                </div>
+                <div class="request-card">
+                    <span class="method-badge">GET</span>
+                    <code>/catalog/</code>
+                    <span class="response-badge">200 OK</span>
+                </div>
+                <div class="flow-card">
+                    <span>Браузер</span>
+                    <b aria-hidden="true">→</b>
+                    <span class="flow-active">Django</span>
+                    <b aria-hidden="true">→</b>
+                    <span>База данных</span>
+                </div>
+                <div class="visual-caption">
+                    <span>01 / ПОНИМАЙ ПРОЦЕСС</span>
+                    <span aria-hidden="true">↗</span>
+                </div>
+            </div>
+        </section>
+        <div class="tech-strip">
+            <div class="container">
+                <span>УЧИМСЯ НА ПРАКТИКЕ</span>
+                <strong>HTTP & формы</strong>
+                <span aria-hidden="true">✳</span>
+                <strong>ORM & SQL</strong>
+                <span aria-hidden="true">✳</span>
+                <strong>Авторизация</strong>
+                <span aria-hidden="true">✳</span>
+                <strong>API & тесты</strong>
+            </div>
+        </div>
+        <section class="section container">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">ОТ ТЕОРИИ К РАБОТАЮЩЕМУ КОДУ</p>
+                    <h2>
+                        Не просто читать.
+                        <br>
+                        Понимать и делать.
+                    </h2>
+                </div>
+                <p class="section-intro">Здесь учебник и приложение дополняют друг друга. Изучи тему, найди её в коде и попробуй изменить поведение.</p>
+            </div>
+            <div class="steps-grid">
+                <a class="step-card" href="{% url 'academy:index' %}">
+                    <span class="step-number">01</span>
+                    <span class="step-symbol" aria-hidden="true">{ }</span>
+                    <h3>Разбери основы</h3>
+                    <p>Как Python, HTTP, Django и база данных превращают запрос в ответ.</p>
+                    <span class="card-link">Открыть учебник ↗</span>
+                </a>
+                <a class="step-card" href="{% url 'main:product_list' %}">
+                    <span class="step-number">02</span>
+                    <span class="step-symbol" aria-hidden="true">⌘</span>
+                    <h3>Исследуй проект</h3>
+                    <p>Каталог, корзина, регистрация и заказы. Всё связано с настоящим backend.</p>
+                    <span class="card-link">Пройти путь покупателя ↗</span>
+                </a>
+                <a class="step-card" href="{% url 'academy:index' %}">
+                    <span class="step-number">03</span>
+                    <span class="step-symbol" aria-hidden="true">↗</span>
+                    <h3>Закрепи практикой</h3>
+                    <p>Выполняй задания, запускай тесты и учись объяснять свои решения.</p>
+                    <span class="card-link">Найти следующую тему ↗</span>
+                </a>
+            </div>
+        </section>
+        <section class="section section-shop">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">ПРОЕКТ, КОТОРЫЙ МЫ РАЗБИРАЕМ</p>
+                        <h2>
+                            Магазин для тех,
+                            <br>
+                            кто создаёт.
+                        </h2>
+                    </div>
+                    <a class="button button-outline"
+                       href="{% url 'main:product_list' %}">Весь каталог <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+                <div class="product-grid">
+                    {% for product in featured_products %}
+                        {% include "includes/product_card.html" %}
+                    {% empty %}
+                        <div class="empty-state">
+                            <h3>Каталог готов к наполнению</h3>
+                            <p>Демонстрационные товары появятся после загрузки учебных данных.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <p class="section-footnote">Это учебный магазин: попробуй добавить товар в корзину и оформить заказ. Реальных платежей здесь нет.</p>
+            </div>
+        </section>
+        <section class="container section">
+            <div class="course-banner">
+                <div>
+                    <p class="eyebrow">ДЕЛАЙ СЛЕДУЮЩИЙ ШАГ</p>
+                    <h2>
+                        Код становится понятным,
+                        <br>
+                        когда знаешь, куда смотреть.
+                    </h2>
+                    <p>Учебник объясняет не только «как», но и «зачем».</p>
+                </div>
+                <a class="button button-light"
+                   href="{% url 'academy:index' %}">Открыть учебник <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container auth-layout">
+        <div class="auth-copy">
+            <p class="eyebrow">НАЧНИ СВОЙ ЭКСПЕРИМЕНТ</p>
+            <h1>
+                Один аккаунт.
+                <br>
+                Много <em>открытий.</em>
+            </h1>
+            <p>Создай учебный аккаунт, пройди путь покупателя и разбери код, который стоит за каждым действием.</p>
+            <div class="auth-note">
+                <span aria-hidden="true">{ }</span>
+                <p>
+                    Форма проверяется на сервере.
+                    <br>
+                    Валидация в браузере — только помощь.
+                </p>
+            </div>
+        </div>
+        <section class="auth-panel">
+            <span class="pill">ДОБРО ПОЖАЛОВАТЬ</span>
+            <h2>Создать аккаунт</h2>
+            <p class="muted">Используй отдельный пароль для учебного проекта.</p>
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+                {% include "includes/form_fields.html" %}
+                <button class="button button-dark button-full" type="submit">Зарегистрироваться →</button>
+            </form>
+            <p class="auth-switch">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+            </p>
+        </section>
+    </div>
+{% endblock %}

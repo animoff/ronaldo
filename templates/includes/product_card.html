@@ -1,0 +1,25 @@
+{# include получает product из внешнего цикла. Django экранирует значения автоматически. #}
+<article class="product-card">
+    <a class="product-art product-tone-{% if product.pk|divisibleby:'3' %}blue{% elif product.pk|divisibleby:'2' %}sand{% else %}sage{% endif %}"
+       href="{% url 'main:product_detail' product.slug %}"
+       aria-label="Подробнее: {{ product.name }}">
+        {% if product.main_image %}
+            <img src="{{ product.main_image.url }}"
+                 alt="{{ product.name }}"
+                 loading="lazy">
+        {% else %}
+            {% include "includes/product_illustration.html" %}
+        {% endif %}
+        <span class="product-category">{{ product.category.name }}</span>
+        <span class="product-arrow" aria-hidden="true">↗</span>
+    </a>
+    <div class="product-meta">
+        <div>
+            <h3>
+                <a href="{% url 'main:product_detail' product.slug %}">{{ product.name }}</a>
+            </h3>
+            <p>{{ product.color }}</p>
+        </div>
+        <strong class="price">{{ product.price|floatformat:0 }} ₽</strong>
+    </div>
+</article>

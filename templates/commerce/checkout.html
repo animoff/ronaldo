@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Оформление заказа — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'commerce:cart' %}">Корзина</a>
+            <span aria-hidden="true">/</span>
+            <span>Оформление</span>
+        </nav>
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ПОСЛЕДНИЙ ШАГ</p>
+                <h1>Оформим заказ.</h1>
+                <p>Укажи вымышленный адрес: настоящей доставки не будет.</p>
+            </div>
+        </div>
+        <div class="cart-layout">
+            <section class="form-panel">
+                <h2>Куда доставить?</h2>
+                <p class="muted">Заказ сохранится в твоём личном кабинете.</p>
+                <form method="post" class="stack-form">
+                    {% csrf_token %}
+                    {% include "includes/form_fields.html" %}
+                    <button class="button button-dark" type="submit">
+                        Подтвердить заказ <span aria-hidden="true">→</span>
+                    </button>
+                    <p class="micro-note">Тестовый заказ без оплаты и обязательств.</p>
+                </form>
+            </section>
+            <aside class="order-summary">
+                <p class="eyebrow">СОСТАВ ЗАКАЗА</p>
+                {% for line in lines %}
+                    <div class="summary-product">
+                        <div>
+                            <strong>{{ line.product.name }}</strong>
+                            <span>{{ line.sku.size.name }} · {{ line.quantity }} шт.</span>
+                        </div>
+                        <span>{{ line.line_total|floatformat:2 }} ₽</span>
+                    </div>
+                {% endfor %}
+                <div class="summary-row summary-total">
+                    <span>Итого</span>
+                    <strong>{{ total|floatformat:2 }} ₽</strong>
+                </div>
+            </aside>
+        </div>
+        {% include "includes/learning_hint.html" with hint="Создание заказа и уменьшение остатков проходят в одной транзакции. Если товара не хватает, изменения откатываются. Ключ идемпотентности защищает от повторного оформления при двойном нажатии." %}
+    </div>
+{% endblock %}

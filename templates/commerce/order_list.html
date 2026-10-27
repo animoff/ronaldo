@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Мои заказы — Backend Lab{% endblock %}
+{% block content %}
+    <div class="container page-space">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">ЛИЧНЫЙ КАБИНЕТ</p>
+                <h1>Мои заказы</h1>
+                <p>{{ user.username }}, здесь сохраняется история твоих покупок.</p>
+            </div>
+            <a class="button button-outline" href="{% url 'main:product_list' %}">Вернуться в магазин ↗</a>
+        </div>
+        {% if orders %}
+            <div class="order-list">
+                {% for order in orders %}
+                    <a class="order-list-item"
+                       href="{% url 'commerce:order_detail' order.pk %}">
+                        <div class="order-icon" aria-hidden="true">▣</div>
+                        <div class="order-description">
+                            <h2>Заказ №{{ order.pk }}</h2>
+                            <p>{{ order.created_at|date:'d.m.Y, H:i' }}</p>
+                        </div>
+                        <span class="status-badge">{{ order.get_status_display }}</span>
+                        <strong>{{ order.total|floatformat:2 }} ₽</strong>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                {% endfor %}
+            </div>
+            {% if orders.has_other_pages %}
+                <nav class="pagination" aria-label="Страницы заказов">
+                    {% if orders.has_previous %}
+                        <a class="button button-outline button-small"
+                           href="?page={{ orders.previous_page_number }}">← Назад</a>
+                    {% endif %}
+                    <span>{{ orders.number }} / {{ orders.paginator.num_pages }}</span>
+                    {% if orders.has_next %}
+                        <a class="button button-outline button-small"
+                           href="?page={{ orders.next_page_number }}">Далее →</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="empty-state spacious">
+                <span class="empty-symbol" aria-hidden="true">▣</span>
+                <h2>Первый заказ ещё впереди</h2>
+                <p>Пройди весь путь: выбери товар, добавь его в корзину и оформи заказ.</p>
+                <a class="button button-dark" href="{% url 'main:product_list' %}">Начать с каталога ↗</a>
+            </div>
+        {% endif %}
+        {% include "includes/learning_hint.html" with hint="Список фильтруется по request.user. Авторизация отвечает на вопрос «кто ты?», а проверка владельца — «имеешь ли ты право видеть этот заказ?»." %}
+    </div>
+{% endblock %}

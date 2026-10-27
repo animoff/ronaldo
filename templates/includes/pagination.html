@@ -1,0 +1,13 @@
+{% if products.has_other_pages %}
+    <nav class="pagination" aria-label="Страницы каталога">
+        {% if products.has_previous %}
+            <a class="button button-outline button-small"
+               href="?q={{ query|urlencode }}&category={{ current_category|urlencode }}&page={{ products.previous_page_number }}">← Назад</a>
+        {% endif %}
+        <span>Страница {{ products.number }} из {{ products.paginator.num_pages }}</span>
+        {% if products.has_next %}
+            <a class="button button-outline button-small"
+               href="?q={{ query|urlencode }}&category={{ current_category|urlencode }}&page={{ products.next_page_number }}">Далее →</a>
+        {% endif %}
+    </nav>
+{% endif %}

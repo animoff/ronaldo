@@ -1,13 +1,22 @@
+# Окружение и локальные секреты
+.venv/
 venv/
-.pylintrc
-__pycache__/
-
-.vscode
-.idea
 .env
-django.log
-security.log
-
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+# Данные, загрузки, собранная статика
 db.sqlite3
+db.sqlite3-*
+*.sqlite3
 media/
-debug.log
+staticfiles/
+*.log
+# Инструменты
+.pytest_cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+.DS_Store
